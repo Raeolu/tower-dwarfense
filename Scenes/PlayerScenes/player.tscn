@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://dp71a0m6irrn7"]
+
+[ext_resource type="Script" uid="uid://detdwr5r37u4j" path="res://Scripts/PlayerScripts/player.gd" id="1_44dyf"]
+[ext_resource type="PackedScene" uid="uid://ckelkvbvju3el" path="res://Assets/Character Models/dwarf.glb" id="1_vn1c7"]
+[ext_resource type="Script" uid="uid://bjemqqanxpt37" path="res://Scripts/PlayerScripts/StateMachine/state_machine.gd" id="3_2oab2"]
+[ext_resource type="Script" uid="uid://blryeifmxbcmk" path="res://Scripts/PlayerScripts/StateMachine/PlayerIdle.gd" id="4_pu5dk"]
+[ext_resource type="Script" uid="uid://bai42gyqc0reo" path="res://Scripts/PlayerScripts/StateMachine/PlayerDash.gd" id="5_c45ss"]
+[ext_resource type="Script" uid="uid://b1rmf2ash3wey" path="res://Scripts/PlayerScripts/StateMachine/PlayerWalking.gd" id="5_sn0nf"]
+[ext_resource type="Script" uid="uid://ch7ht77dy4cfc" path="res://Scripts/PlayerScripts/StateMachine/PlayerAttack.gd" id="6_acd72"]
+[ext_resource type="Script" uid="uid://b78r2y5go4qkw" path="res://Scripts/PlayerScripts/ResourceManager.gd" id="7_01vnt"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_brhye"]
+height = 1.6240234
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_brhye"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5yleu"]
+albedo_color = Color(1, 1, 0.0627451, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mnwos"]
+material = SubResource("StandardMaterial3D_5yleu")
+
+[sub_resource type="LabelSettings" id="LabelSettings_xv85a"]
+font_size = 32
+
+[node name="Player" type="CharacterBody3D" unique_id=1732928329 groups=["player"]]
+collision_layer = 3
+script = ExtResource("1_44dyf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1036394565]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8120117, 0)
+shape = SubResource("CapsuleShape3D_brhye")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1374031771 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_2oab2")
+initial_state = NodePath("Walking")
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=809708579 node_paths=PackedStringArray("player")]
+script = ExtResource("4_pu5dk")
+player = NodePath("../..")
+
+[node name="Walking" type="Node" parent="StateMachine" unique_id=1143180756 node_paths=PackedStringArray("player")]
+script = ExtResource("5_sn0nf")
+player = NodePath("../..")
+
+[node name="Dash" type="Node" parent="StateMachine" unique_id=365329483 node_paths=PackedStringArray("player")]
+script = ExtResource("5_c45ss")
+player = NodePath("../..")
+
+[node name="Attack" type="Node" parent="StateMachine" unique_id=1159068304 node_paths=PackedStringArray("player")]
+script = ExtResource("6_acd72")
+player = NodePath("../..")
+
+[node name="StateLabel" type="Label" parent="." unique_id=281220591]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ResourceManager" type="Node" parent="." unique_id=1665941596]
+script = ExtResource("7_01vnt")
+
+[node name="Visuals" type="Node3D" parent="." unique_id=190528697]
+
+[node name="dwarf" parent="Visuals" unique_id=69745088 instance=ExtResource("1_vn1c7")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="FaceDirection" type="Node3D" parent="Visuals" unique_id=1422870127]
+
+[node name="AttackArea" type="Area3D" parent="Visuals" unique_id=1284473842]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6631393, -1.134095)
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Visuals/AttackArea" unique_id=1700969856]
+shape = SubResource("BoxShape3D_brhye")
+
+[node name="AttackTestMesh" type="MeshInstance3D" parent="Visuals" unique_id=675494612]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6631393, -1.134095)
+visible = false
+mesh = SubResource("BoxMesh_mnwos")
+
+[node name="PlayerUI" type="Control" parent="." unique_id=1287596094]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerUI" unique_id=446749101]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 800.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerUI/MarginContainer" unique_id=591761832]
+layout_mode = 2
+
+[node name="ResourceCounter" type="Label" parent="PlayerUI/MarginContainer/VBoxContainer" unique_id=855048298]
+layout_mode = 2
+text = "0 GOLD
+"
+label_settings = SubResource("LabelSettings_xv85a")
+horizontal_alignment = 2
+
+[connection signal="body_entered" from="Visuals/AttackArea" to="StateMachine/Attack" method="_on_attack_area_body_entered"]

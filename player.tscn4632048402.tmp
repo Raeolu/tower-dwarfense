@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bwt26mhae00cb"]
+
+[ext_resource type="Script" uid="uid://bd58o4fodrnvi" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://rgufr04x26ie" path="res://assets/misc/direction_indicator.glb" id="2_onrkg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4flbx"]
+albedo_color = Color(1, 0.10980392, 0.23529412, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_sh265"]
+material = SubResource("StandardMaterial3D_4flbx")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4flbx"]
+size = Vector3(0.99, 0.99, 0.99)
+
+[node name="Player" type="CharacterBody3D" unique_id=1578392544]
+script = ExtResource("1_4flbx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2006117647]
+mesh = SubResource("SphereMesh_sh265")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1594383913]
+shape = SubResource("BoxShape3D_4flbx")
+
+[node name="direction_indicator" parent="." unique_id=1222140089 instance=ExtResource("2_onrkg")]
+transform = Transform3D(0.275, 0, 0, 0, 0.275, 0, 0, 0, 0.275, 0, 0, -0.8679025)

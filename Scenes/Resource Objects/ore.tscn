@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c7acycxtn1ut6"]
+
+[ext_resource type="Script" uid="uid://deo5rpvhd4c7r" path="res://Scripts/ResourceScripts/ore.gd" id="1_p2yev"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_brhye"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnwos"]
+albedo_color = Color(0.3553136, 0.35531354, 0.35531357, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_brhye"]
+material = SubResource("StandardMaterial3D_mnwos")
+size = Vector3(2, 2, 2)
+
+[node name="Ore" type="StaticBody3D" unique_id=359706659 groups=["resource"]]
+script = ExtResource("1_p2yev")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1048024563]
+shape = SubResource("BoxShape3D_brhye")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1998810708]
+mesh = SubResource("BoxMesh_brhye")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=568303966]
+radius = 1.92

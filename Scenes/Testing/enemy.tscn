@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://c3gdc3afpgfki"]
+
+[ext_resource type="Script" uid="uid://u6o4i5osx48h" path="res://Scripts/EnemyScripts/enemy.gd" id="1_4gyqm"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7xaro"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7k104"]
+albedo_color = Color(0.7340286, 0, 0.16220373, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_4gyqm"]
+material = SubResource("StandardMaterial3D_7k104")
+
+[node name="enemy" type="CharacterBody3D" unique_id=1431962782 groups=["enemy"]]
+script = ExtResource("1_4gyqm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=467238119]
+shape = SubResource("SphereShape3D_7xaro")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=36753320]
+mesh = SubResource("SphereMesh_4gyqm")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=941621770]
+path_height_offset = 0.1
+avoidance_enabled = true
+radius = 1.0
+
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
