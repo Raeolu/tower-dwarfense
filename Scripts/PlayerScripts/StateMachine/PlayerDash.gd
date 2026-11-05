@@ -2,7 +2,7 @@ extends PlayerState
 
 @export var dash_velocity = 20.0
 @export var dash_duration = 0.2
-@export var dash_cooldown = 2.5
+@export var dash_cooldown = 0.5
 @export var dash_direction_influence_multiplier = 1.0
 
 var dash_direction = Vector3(0,0,0)
