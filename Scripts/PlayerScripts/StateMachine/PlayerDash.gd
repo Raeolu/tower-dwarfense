@@ -2,6 +2,7 @@ extends PlayerState
 
 @export var dash_velocity = 20.0
 @export var dash_duration = 0.2
+@export var dash_cooldown = 2.5
 @export var dash_direction_influence_multiplier = 1.0
 
 var dash_direction = Vector3(0,0,0)
@@ -9,6 +10,7 @@ var dash_direction = Vector3(0,0,0)
 func enter():
 	dash_direction = player.direction
 	player.velocity = dash_direction * dash_velocity
+	start_dash_cooldown()
 	
 	#sets the state back to idle after the dash duration
 	await get_tree().create_timer(dash_duration).timeout
@@ -23,3 +25,9 @@ func physics_update(_delta: float):
 	
 	#rotates the player to the direction. Check the player script for more info.
 	player.rotate_to_direction(player.velocity)
+
+
+func start_dash_cooldown():
+	player.can_dash = false
+	await get_tree().create_timer(dash_cooldown).timeout
+	player.can_dash = true

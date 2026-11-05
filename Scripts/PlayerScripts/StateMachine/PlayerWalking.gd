@@ -23,7 +23,7 @@ func physics_update(_delta: float):
 	if Input.is_action_just_pressed("attack"):
 		transition.emit("attack")
 	
-	elif Input.is_action_just_pressed("bash"):
+	elif Input.is_action_just_pressed("bash") and player.can_dash == true:
 		transition.emit("Dash")
 		
 		
