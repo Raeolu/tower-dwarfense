@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bjsqh4tsrtrsq"]
+
+[ext_resource type="Script" uid="uid://dt51t2cv20uqy" path="res://Scripts/Projectile Scripts/cannonball.gd" id="1_mp4b3"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_brhye"]
+radius = 0.25
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_brhye"]
+albedo_color = Color(0.12225223, 0.12225223, 0.12225223, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_brhye"]
+material = SubResource("StandardMaterial3D_brhye")
+radius = 0.25
+height = 0.5
+
+[node name="Cannonball" type="RigidBody3D" unique_id=1073471968]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_mp4b3")
+
+[node name="Hitbox" type="Area3D" parent="." unique_id=2055156043]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=250128242]
+shape = SubResource("SphereShape3D_brhye")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1407327847]
+mesh = SubResource("SphereMesh_brhye")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2004972680]
+shape = SubResource("SphereShape3D_brhye")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

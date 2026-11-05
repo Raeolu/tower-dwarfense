@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dbw507ub7wfc"]
+
+[ext_resource type="PackedScene" uid="uid://ld7hq1shsrgm" path="res://Assets/Turret Models/basic_turret.glb" id="1_15scr"]
+[ext_resource type="Script" uid="uid://cfxsoxtecej22" path="res://Scripts/Turret Scripts/basic_turret.gd" id="1_d2jwy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_brhye"]
+size = Vector3(1, 1.1516418, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mnwos"]
+height = 0.99560547
+radius = 10.0
+
+[node name="Basic Turret" type="StaticBody3D" unique_id=1079086524 node_paths=PackedStringArray("range", "projectile_spawn_position")]
+script = ExtResource("1_d2jwy")
+range = NodePath("Range")
+projectile_spawn_position = NodePath("basic_turret/Superstructure/ProjectileSpawnPosition")
+
+[node name="basic_turret" parent="." unique_id=1166303638 instance=ExtResource("1_15scr")]
+
+[node name="ProjectileSpawnPosition" type="Node3D" parent="basic_turret/Superstructure" parent_id_path=PackedInt32Array(1166303638, 1657954020) index="0" unique_id=70149621]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.83626056, -1.1485567)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1037504565]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5758209, 0)
+shape = SubResource("BoxShape3D_brhye")
+
+[node name="Range" type="Area3D" parent="." unique_id=1548054267]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Range" unique_id=148293014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50219727, 0)
+shape = SubResource("CylinderShape3D_mnwos")
+
+[editable path="basic_turret"]

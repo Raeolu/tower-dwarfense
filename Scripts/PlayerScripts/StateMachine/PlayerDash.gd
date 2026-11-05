@@ -18,7 +18,6 @@ func enter():
 	
 
 func physics_update(_delta: float):
-	print(player.direction)
 	#player.velocity.x = player.velocity.x * (player.direction.x * dash_direction_influence_multiplier)
 	#player.velocity.y = player.velocity.y * (player.direction.y * dash_direction_influence_multiplier)
 	player.velocity.y = 0.0
