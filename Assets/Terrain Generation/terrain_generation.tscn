@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://us3ygdruudql"]
+
+[ext_resource type="Script" uid="uid://bvbtqsk3isim" path="res://Scripts/TestScripts/terrain_generation_test.gd" id="1_i7ujp"]
+[ext_resource type="PackedScene" uid="uid://dp71a0m6irrn7" path="res://Scenes/PlayerScenes/player.tscn" id="2_po2ia"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_po2ia"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_wywc6"]
+sky_material = SubResource("ProceduralSkyMaterial_po2ia")
+
+[sub_resource type="Environment" id="Environment_g517b"]
+background_mode = 2
+sky = SubResource("Sky_wywc6")
+glow_enabled = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_i7ujp"]
+noise_type = 3
+frequency = 0.0056
+
+[node name="TerrainGeneration" type="Node3D" unique_id=617538926]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=836673737]
+environment = SubResource("Environment_g517b")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2001260977]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="TerrainGenerator" type="Node" parent="." unique_id=2068567780]
+script = ExtResource("1_i7ujp")
+noise = SubResource("FastNoiseLite_i7ujp")
+
+[node name="Player" parent="." unique_id=1732928329 instance=ExtResource("2_po2ia")]
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=119072871]
+transform = Transform3D(1, 0, 0, 0, 0.5482118, 0.83633953, 0, -0.83633953, 0.5482118, 0.6458104, 6.650365, 2.9703708)
+current = true
