@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://b1rmf2ash3wey" path="res://Scripts/PlayerScripts/StateMachine/PlayerWalking.gd" id="5_sn0nf"]
 [ext_resource type="Script" uid="uid://ch7ht77dy4cfc" path="res://Scripts/PlayerScripts/StateMachine/PlayerAttack.gd" id="6_acd72"]
 [ext_resource type="Script" uid="uid://b78r2y5go4qkw" path="res://Scripts/PlayerScripts/ResourceManager.gd" id="7_01vnt"]
+[ext_resource type="PackedScene" uid="uid://b12c4ocvv04vf" path="res://Scenes/UI Scenes/pause_menu.tscn" id="9_touca"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_brhye"]
 height = 1.6240234
@@ -97,5 +98,9 @@ text = "0 GOLD
 "
 label_settings = SubResource("LabelSettings_xv85a")
 horizontal_alignment = 2
+
+[node name="PauseMenu" parent="PlayerUI" unique_id=843731352 instance=ExtResource("9_touca")]
+visible = false
+layout_mode = 1
 
 [connection signal="body_entered" from="Visuals/AttackArea" to="StateMachine/Attack" method="_on_attack_area_body_entered"]
