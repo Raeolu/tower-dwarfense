@@ -2,9 +2,14 @@ class_name TerrainGeneration
 extends Node
 
 var mesh : MeshInstance3D
-var size_depth : int = 100
-var size_width : int = 100
-var mesh_resolution : int = 2
+var size_depth : int = 1000
+var size_width : int = 1000
+var mesh_resolution : float = 0.2
+
+@export var max_height: float = 16.0
+@export var step_height: float = 4.0
+@export var slope_start: float = 0.35
+@export var slope_end: float = 0.65
 
 @export var noise : FastNoiseLite
 
@@ -14,8 +19,8 @@ func _ready() -> void:
 func generate():
 	var plane_mesh = PlaneMesh.new()
 	plane_mesh.size = Vector2(size_width, size_depth)
-	plane_mesh.subdivide_depth = size_depth * mesh_resolution
-	plane_mesh.subdivide_width = size_width * mesh_resolution
+	plane_mesh.subdivide_depth = int(size_depth * mesh_resolution)
+	plane_mesh.subdivide_width = int(size_width * mesh_resolution)
 	plane_mesh.material = preload("res://Assets/Terrain Generation/TerrainMaterial.tres")
 	
 	var surface = SurfaceTool.new()
@@ -38,15 +43,22 @@ func generate():
 	data.commit_to_surface(array_plane)
 	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
 	surface.create_from(array_plane, 0)
+	surface.deindex()
 	surface.generate_normals()
 	
 	mesh  = MeshInstance3D.new()
 	mesh.mesh = surface.commit()
 	mesh.create_trimesh_collision()
-	mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	mesh.add_to_group("NavSource")
 	add_child(mesh)
 	
-func get_noise_y (x, z) -> float:
-	var value = noise.get_noise_2d(x, z)
-	return value * 50
+func get_noise_y(x, z) -> float:
+	var height = noise.get_noise_2d(x, z) * max_height
+
+	var level = floor(height / step_height)
+	var fraction = fposmod(height, step_height) / step_height
+
+	var slope = smoothstep(slope_start, slope_end, fraction)
+
+	return (level + slope) * step_height

@@ -13,11 +13,11 @@ sky_material = SubResource("ProceduralSkyMaterial_po2ia")
 [sub_resource type="Environment" id="Environment_g517b"]
 background_mode = 2
 sky = SubResource("Sky_wywc6")
+ambient_light_energy = 0.3
 glow_enabled = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_i7ujp"]
-noise_type = 3
-frequency = 0.0056
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_po2ia"]
+frequency = 0.0009
 
 [node name="TerrainGeneration" type="Node3D" unique_id=617538926]
 
@@ -25,15 +25,19 @@ frequency = 0.0056
 environment = SubResource("Environment_g517b")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2001260977]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+transform = Transform3D(-0.29679, 0.32132673, 0.899258, 0.81358206, 0.5781429, 0.061929196, -0.5000002, 0.7500002, -0.43301272, 0, 0, 0)
+light_angular_distance = 0.5
 shadow_enabled = true
 
 [node name="TerrainGenerator" type="Node" parent="." unique_id=2068567780]
 script = ExtResource("1_i7ujp")
-noise = SubResource("FastNoiseLite_i7ujp")
+max_height = 100.0
+step_height = 5.0
+noise = SubResource("FastNoiseLite_po2ia")
 
 [node name="Player" parent="." unique_id=1732928329 instance=ExtResource("2_po2ia")]
 
 [node name="Camera3D" type="Camera3D" parent="Player" unique_id=119072871]
 transform = Transform3D(1, 0, 0, 0, 0.5482118, 0.83633953, 0, -0.83633953, 0.5482118, 0.6458104, 6.650365, 2.9703708)
 current = true
+fov = 118.4
