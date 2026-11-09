@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://dnv6ysspux130"]
+
+[ext_resource type="Script" uid="uid://dtnfv7bbe7hw8" path="res://Scripts/UI Scripts/radial_menu.gd" id="1_mrvdy"]
+
+[node name="RadialMenu" type="Control" unique_id=260848950]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mrvdy")
+
+[node name="ButtonContainer" type="Control" parent="." unique_id=989431449]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="ButtonContainer" unique_id=9692626]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "1"
+
+[node name="Button2" type="Button" parent="ButtonContainer" unique_id=2052092240]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "2"
+
+[node name="Button3" type="Button" parent="ButtonContainer" unique_id=410097564]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "3"
+
+[node name="Button4" type="Button" parent="ButtonContainer" unique_id=1924878397]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "4"
+
+[node name="Button5" type="Button" parent="ButtonContainer" unique_id=806369572]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "5"
+
+[node name="Button6" type="Button" parent="ButtonContainer" unique_id=1527083078]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "6"
+
+[node name="Button7" type="Button" parent="ButtonContainer" unique_id=1205865291]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "7"
+
+[node name="Button8" type="Button" parent="ButtonContainer" unique_id=530640743]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "8"

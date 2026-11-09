@@ -17,7 +17,7 @@ ambient_light_energy = 0.3
 glow_enabled = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_po2ia"]
-frequency = 0.0009
+frequency = 0.003
 
 [node name="TerrainGeneration" type="Node3D" unique_id=617538926]
 
@@ -31,8 +31,6 @@ shadow_enabled = true
 
 [node name="TerrainGenerator" type="Node" parent="." unique_id=2068567780]
 script = ExtResource("1_i7ujp")
-max_height = 100.0
-step_height = 5.0
 noise = SubResource("FastNoiseLite_po2ia")
 
 [node name="Player" parent="." unique_id=1732928329 instance=ExtResource("2_po2ia")]
