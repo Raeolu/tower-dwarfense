@@ -9,7 +9,7 @@ func enter() -> void:
 	player.coyote_timer = 0.0
 	control_lock_timer = player.wall_jump_control_lock_time
 
-	# Push away from the wall normal and boost upward.
+	# Push away from the wall normal and jump up
 	var wall_normal: Vector3 = player.get_wall_normal()
 	var push_dir := Vector3(wall_normal.x, 0.0, wall_normal.z).normalized()
 
@@ -39,6 +39,7 @@ func physics_update(delta: float) -> void:
 		transition.emit("WallJump")
 		return
 
+	# Other transitions
 	if Input.is_action_just_pressed("attack"):
 		transition.emit("Attack")
 		return

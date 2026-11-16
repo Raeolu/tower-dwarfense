@@ -2,13 +2,13 @@ extends PlayerState
 
 
 func physics_update(delta: float) -> void:
-	# Apply fall gravity multiplier for a snappier descent.
+	# Faster falling
 	player.apply_gravity(delta, player.fall_gravity_multiplier)
 
 	player.apply_horizontal_movement(delta)
 	player.rotate_to_direction(player.direction)
 
-	# Coyote time jump: allow jumping shortly after walking off a ledge.
+	# Coyote time jump: look at miro for more info
 	if Input.is_action_just_pressed("jump") and player.coyote_timer > 0.0:
 		transition.emit("Jump")
 		return

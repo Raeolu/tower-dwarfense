@@ -25,6 +25,7 @@ func physics_update(delta: float) -> void:
 		transition.emit("WallJump")
 		return
 
+	# Other transitions
 	if Input.is_action_just_pressed("attack"):
 		transition.emit("Attack")
 		return
