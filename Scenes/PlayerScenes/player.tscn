@@ -8,6 +8,9 @@
 [ext_resource type="Script" uid="uid://b1rmf2ash3wey" path="res://Scripts/PlayerScripts/StateMachine/PlayerWalking.gd" id="5_sn0nf"]
 [ext_resource type="Script" uid="uid://ch7ht77dy4cfc" path="res://Scripts/PlayerScripts/StateMachine/PlayerAttack.gd" id="6_acd72"]
 [ext_resource type="Script" uid="uid://b78r2y5go4qkw" path="res://Scripts/PlayerScripts/ResourceManager.gd" id="7_01vnt"]
+[ext_resource type="Script" uid="uid://dpr1kc4jf6stp" path="res://Scripts/PlayerScripts/StateMachine/PlayerJump.gd" id="7_j1pys"]
+[ext_resource type="Script" uid="uid://c5mj4m5yk37h6" path="res://Scripts/PlayerScripts/StateMachine/PlayerFall.gd" id="8_nyhdo"]
+[ext_resource type="Script" uid="uid://c10p21ph1unso" path="res://Scripts/PlayerScripts/StateMachine/PlayerWallJump.gd" id="9_2f148"]
 [ext_resource type="PackedScene" uid="uid://b12c4ocvv04vf" path="res://Scenes/UI Scenes/pause_menu.tscn" id="9_touca"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_brhye"]
@@ -50,6 +53,18 @@ player = NodePath("../..")
 
 [node name="Attack" type="Node" parent="StateMachine" unique_id=1159068304 node_paths=PackedStringArray("player")]
 script = ExtResource("6_acd72")
+player = NodePath("../..")
+
+[node name="Jump" type="Node" parent="StateMachine" unique_id=1512249720 node_paths=PackedStringArray("player")]
+script = ExtResource("7_j1pys")
+player = NodePath("../..")
+
+[node name="Fall" type="Node" parent="StateMachine" unique_id=1172070004 node_paths=PackedStringArray("player")]
+script = ExtResource("8_nyhdo")
+player = NodePath("../..")
+
+[node name="WallJump" type="Node" parent="StateMachine" unique_id=140662510 node_paths=PackedStringArray("player")]
+script = ExtResource("9_2f148")
 player = NodePath("../..")
 
 [node name="StateLabel" type="Label" parent="." unique_id=281220591]

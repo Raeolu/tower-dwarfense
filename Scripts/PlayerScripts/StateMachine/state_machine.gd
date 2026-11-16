@@ -14,19 +14,19 @@ func _ready() -> void:
 		if child is PlayerState:
 			states[child.name.to_lower()] = child #to_lower converts string to lowercase, in case of bad capitalisation
 			child.transition.connect(on_state_transition)
-	
+
 	if initial_state: #if an initial state is assigned, call its enter function and set it to current state
 		initial_state.enter()
 		current_state = initial_state
-	
+
 	print(states)
-	
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if current_state:
 		current_state.update(delta)
-	
+
 	$"../StateLabel".text = str(current_state)
 
 func _physics_process(delta: float) -> void:
@@ -38,14 +38,14 @@ func on_state_transition(new_state_name):
 	
 	if old_state != current_state:
 		return
-	
+
 	var new_state = states.get(new_state_name.to_lower())
 	if !new_state:
 		return
-	
+
 	if current_state:
 		current_state.exit()
-	
+
 	new_state.enter()
-	
+
 	current_state = new_state
