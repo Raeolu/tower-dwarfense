@@ -34,8 +34,3 @@ script = ExtResource("1_i7ujp")
 noise = SubResource("FastNoiseLite_po2ia")
 
 [node name="Player" parent="." unique_id=1732928329 instance=ExtResource("2_po2ia")]
-
-[node name="Camera3D" type="Camera3D" parent="Player" unique_id=119072871]
-transform = Transform3D(1, 0, 0, 0, 0.5482118, 0.83633953, 0, -0.83633953, 0.5482118, 0.6458104, 6.650365, 2.9703708)
-current = true
-fov = 118.4

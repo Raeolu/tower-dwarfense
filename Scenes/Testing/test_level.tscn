@@ -35,10 +35,6 @@ script = ExtResource("1_su0nh")
 [node name="player" parent="." unique_id=1732928329 instance=ExtResource("6_kbu4i")]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -0.42654133, 0.50000095, 0.64217377)
 
-[node name="Camera3D" type="Camera3D" parent="player" unique_id=939948804]
-transform = Transform3D(1, 0, 0, 0, 0.42456302, 0.9053984, 0, -0.9053984, 0.42456302, 0.6458104, 7.0617285, 2.5039382)
-current = true
-
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=92031756]
 navigation_mesh = SubResource("NavigationMesh_f7g2b")
 
@@ -47,15 +43,18 @@ navigation_mesh = SubResource("NavigationMesh_f7g2b")
 [node name="floor" type="CSGBox3D" parent="NavigationRegion3D/map" unique_id=1408545104]
 material_override = SubResource("StandardMaterial3D_1c2mv")
 use_collision = true
+collision_layer = 17
 size = Vector3(1000, 1, 1000)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/map" unique_id=555593757]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3)
 use_collision = true
+collision_layer = 17
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/map" unique_id=806493903]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.5, -3)
 use_collision = true
+collision_layer = 17
 size = Vector3(2, 2, 2)
 
 [node name="env" type="Node3D" parent="." unique_id=133944956]
@@ -108,6 +107,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.881067, 0.7499981, -3.13737
 
 [node name="bonki fruit3" parent="." unique_id=1482350372 instance=ExtResource("5_p7ky4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.363589, 0.9999981, 2.0776615)
+
+[node name="bonki fruit4" parent="." unique_id=1264520727 instance=ExtResource("5_p7ky4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.364481, 0.9999981, 2.0776615)
+
+[node name="bonki fruit5" parent="." unique_id=1012707972 instance=ExtResource("5_p7ky4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.364481, 0.9999981, 3.5081682)
+
+[node name="bonki fruit6" parent="." unique_id=707901238 instance=ExtResource("5_p7ky4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4495907, 0.9999981, 3.5081682)
+
+[node name="bonki fruit7" parent="." unique_id=841040888 instance=ExtResource("5_p7ky4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4495907, 0.9999981, 5.153707)
+
+[node name="bonki fruit8" parent="." unique_id=311055431 instance=ExtResource("5_p7ky4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4222722, 0.9999981, 5.153707)
 
 [node name="Ore" parent="." unique_id=359706659 instance=ExtResource("6_eamke")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2447557, 1.5, 4.0966606)
