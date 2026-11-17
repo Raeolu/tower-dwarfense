@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://b1rmf2ash3wey" path="res://Scripts/PlayerScripts/StateMachine/PlayerWalking.gd" id="5_sn0nf"]
 [ext_resource type="Script" uid="uid://ch7ht77dy4cfc" path="res://Scripts/PlayerScripts/StateMachine/PlayerAttack.gd" id="6_acd72"]
 [ext_resource type="Script" uid="uid://b2b4qxiyagqir" path="res://Scripts/UI Scripts/resource_counter.gd" id="9_m3tqg"]
+[ext_resource type="PackedScene" uid="uid://dnv6ysspux130" path="res://Scenes/UI Scenes/radial_menu.tscn" id="9_ow3yf"]
 [ext_resource type="PackedScene" uid="uid://b12c4ocvv04vf" path="res://Scenes/UI Scenes/pause_menu.tscn" id="9_touca"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_brhye"]
@@ -97,8 +98,25 @@ label_settings = SubResource("LabelSettings_xv85a")
 horizontal_alignment = 2
 script = ExtResource("9_m3tqg")
 
+[node name="CenterContainer" type="CenterContainer" parent="PlayerUI/MarginContainer/VBoxContainer" unique_id=1608847625]
+layout_mode = 2
+
 [node name="PauseMenu" parent="PlayerUI" unique_id=843731352 instance=ExtResource("9_touca")]
 visible = false
 layout_mode = 1
+
+[node name="RadialMenu" parent="PlayerUI" unique_id=260848950 instance=ExtResource("9_ow3yf")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 640.0
+offset_top = 97.0
+offset_right = 640.0
+offset_bottom = 97.0
+
+[node name="BuildManager" type="Node3D" parent="." unique_id=1635773627]
 
 [connection signal="body_entered" from="Visuals/AttackArea" to="StateMachine/Attack" method="_on_attack_area_body_entered"]
