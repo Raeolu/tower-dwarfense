@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://bai42gyqc0reo" path="res://Scripts/PlayerScripts/StateMachine/PlayerDash.gd" id="5_c45ss"]
 [ext_resource type="Script" uid="uid://b1rmf2ash3wey" path="res://Scripts/PlayerScripts/StateMachine/PlayerWalking.gd" id="5_sn0nf"]
 [ext_resource type="Script" uid="uid://ch7ht77dy4cfc" path="res://Scripts/PlayerScripts/StateMachine/PlayerAttack.gd" id="6_acd72"]
-[ext_resource type="Script" uid="uid://b78r2y5go4qkw" path="res://Scripts/PlayerScripts/ResourceManager.gd" id="7_01vnt"]
+[ext_resource type="Script" uid="uid://b2b4qxiyagqir" path="res://Scripts/UI Scripts/resource_counter.gd" id="9_m3tqg"]
 [ext_resource type="PackedScene" uid="uid://b12c4ocvv04vf" path="res://Scenes/UI Scenes/pause_menu.tscn" id="9_touca"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_brhye"]
@@ -56,9 +56,6 @@ player = NodePath("../..")
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="ResourceManager" type="Node" parent="." unique_id=1665941596]
-script = ExtResource("7_01vnt")
-
 [node name="Visuals" type="Node3D" parent="." unique_id=190528697]
 
 [node name="dwarf" parent="Visuals" unique_id=69745088 instance=ExtResource("1_vn1c7")]
@@ -98,6 +95,7 @@ text = "0 GOLD
 "
 label_settings = SubResource("LabelSettings_xv85a")
 horizontal_alignment = 2
+script = ExtResource("9_m3tqg")
 
 [node name="PauseMenu" parent="PlayerUI" unique_id=843731352 instance=ExtResource("9_touca")]
 visible = false
