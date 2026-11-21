@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://us3ygdruudql"]
 
-[ext_resource type="Script" uid="uid://bvbtqsk3isim" path="res://Scripts/TestScripts/terrain_generation_test.gd" id="1_i7ujp"]
+[ext_resource type="Script" uid="uid://cmbfeanr3lprw" path="res://Scripts/TestScripts/blocky_terrain_generator.gd" id="1_i7ujp"]
 [ext_resource type="PackedScene" uid="uid://dp71a0m6irrn7" path="res://Scenes/PlayerScenes/player.tscn" id="2_po2ia"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_po2ia"]
@@ -17,7 +17,14 @@ ambient_light_energy = 0.3
 glow_enabled = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_po2ia"]
-frequency = 0.003
+frequency = 0.012
+
+[sub_resource type="Curve3D" id="Curve3D_po2ia"]
+_data = {
+"points": PackedVector3Array(-3.3507328, 1.9073486e-06, -5.7178106, 3.3507328, -1.9073486e-06, 5.7178106, -29.389996, -0.75001526, -62.868412, -16.590252, 0, 0.033186913, 16.590252, 0, -0.033186913, -40.08207, 1.9073486e-06, -10.065092, -21.543465, -3.8146973e-06, 7.80972, 21.543465, 3.8146973e-06, -7.80972, 18.50713, 1.5258789e-05, -5.0177546, 1.2791033, 0, -12.475351, -1.2791033, 0, 12.475351, 61.595627, 1.5258789e-05, -33.278404, 15.564214, 0.18750381, -19.195242, -15.564214, -0.18750381, 19.195242, 51.62052, 0, 4.083968, -2.2601547, -1.9073486e-06, -8.1255, 2.2601547, 1.9073486e-06, 8.1255, 16.493938, 2.9627686, 25.999989, -17.695522, -0.18749237, -10.214638, 17.695522, 0.18749237, 10.214638, 49.614967, -0.75, 32.97238, -9.454203, 1.1444092e-05, -6.750307, 9.454203, -1.1444092e-05, 6.750307, 70.120865, -3.0517578e-05, 84.361115),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 8
 
 [node name="TerrainGeneration" type="Node3D" unique_id=617538926]
 
@@ -29,8 +36,13 @@ transform = Transform3D(-0.29679, 0.32132673, 0.899258, 0.81358206, 0.5781429, 0
 light_angular_distance = 0.5
 shadow_enabled = true
 
-[node name="TerrainGenerator" type="Node" parent="." unique_id=2068567780]
+[node name="TerrainGenerator" type="Node3D" parent="." unique_id=2068567780]
 script = ExtResource("1_i7ujp")
+cells_per_side = 200
+cell_size = 1.0
 noise = SubResource("FastNoiseLite_po2ia")
+
+[node name="Path3D" type="Path3D" parent="TerrainGenerator" unique_id=231850731]
+curve = SubResource("Curve3D_po2ia")
 
 [node name="Player" parent="." unique_id=1732928329 instance=ExtResource("2_po2ia")]
