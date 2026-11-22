@@ -10,9 +10,12 @@ extends PlayerState
 func enter():
 	hitbox.monitoring = true
 	attack_test_mesh.show()
-	
+
 	await get_tree().create_timer(attack_duration).timeout
-	transition.emit("Idle")
+	if player.is_on_floor():
+		transition.emit("Idle")
+	else:
+		transition.emit("Fall")
 
 
 func exit():
@@ -20,15 +23,9 @@ func exit():
 	attack_test_mesh.hide()
 
 
-func physics_update(_delta: float):
-	if player.direction:
-		player.velocity.x = player.direction.x * (player.SPEED * attack_move_speed_factor)
-		player.velocity.z = player.direction.z * (player.SPEED * attack_move_speed_factor)
-	else:
-		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
-		player.velocity.z = move_toward(player.velocity.z, 0, player.SPEED)
-	
-	#rotates the player to the direction. Check the player script for more info.
+func physics_update(delta: float):
+	player.apply_gravity(delta)
+	player.apply_horizontal_movement(delta, attack_move_speed_factor)
 	player.rotate_to_direction(player.direction)
 
 
