@@ -13,8 +13,8 @@ var menuTween: Tween
 var selected_button: Button = null
 
 func _ready() -> void:
-	centerPosition = global_position + get_rect().size / 2 - button_container.get_rect().size / 2
-
+	centerPosition = get_viewport_rect().size / 2.0
+	
 	button_container.hide()
 
 	for button in button_container.get_children():
@@ -37,6 +37,7 @@ func _process(delta: float) -> void:
 
 
 func _show_menu() -> void:
+	#centerPosition = get_viewport_rect().size / 2.0
 	active = true
 	selected_button = null
 	button_container.show()

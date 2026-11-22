@@ -7,11 +7,15 @@
 [ext_resource type="Script" uid="uid://bai42gyqc0reo" path="res://Scripts/PlayerScripts/StateMachine/PlayerDash.gd" id="5_c45ss"]
 [ext_resource type="Script" uid="uid://b1rmf2ash3wey" path="res://Scripts/PlayerScripts/StateMachine/PlayerWalking.gd" id="5_sn0nf"]
 [ext_resource type="Script" uid="uid://ch7ht77dy4cfc" path="res://Scripts/PlayerScripts/StateMachine/PlayerAttack.gd" id="6_acd72"]
-[ext_resource type="Script" uid="uid://b78r2y5go4qkw" path="res://Scripts/PlayerScripts/ResourceManager.gd" id="7_01vnt"]
+[ext_resource type="Script" uid="uid://b2b4qxiyagqir" path="res://Scripts/UI Scripts/resource_counter.gd" id="9_m3tqg"]
+[ext_resource type="PackedScene" uid="uid://dnv6ysspux130" path="res://Scenes/UI Scenes/radial_menu.tscn" id="9_ow3yf"]
 [ext_resource type="Script" uid="uid://dpr1kc4jf6stp" path="res://Scripts/PlayerScripts/StateMachine/PlayerJump.gd" id="7_j1pys"]
 [ext_resource type="Script" uid="uid://c5mj4m5yk37h6" path="res://Scripts/PlayerScripts/StateMachine/PlayerFall.gd" id="8_nyhdo"]
 [ext_resource type="Script" uid="uid://c10p21ph1unso" path="res://Scripts/PlayerScripts/StateMachine/PlayerWallJump.gd" id="9_2f148"]
 [ext_resource type="PackedScene" uid="uid://b12c4ocvv04vf" path="res://Scenes/UI Scenes/pause_menu.tscn" id="9_touca"]
+[ext_resource type="Script" uid="uid://b6qi4vbryp0ab" path="res://Scripts/PlayerScripts/build_manager.gd" id="11_ow3yf"]
+[ext_resource type="PackedScene" uid="uid://dbw507ub7wfc" path="res://Scenes/Turret Scenes/basic_turret.tscn" id="12_j1pys"]
+[ext_resource type="PackedScene" uid="uid://bvhtagmsp0sa8" path="res://Scenes/Testing/TurretPlacementTestScene.tscn" id="13_nyhdo"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_brhye"]
 height = 1.6240234
@@ -27,9 +31,16 @@ material = SubResource("StandardMaterial3D_5yleu")
 [sub_resource type="LabelSettings" id="LabelSettings_xv85a"]
 font_size = 32
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_mnwos"]
+size = Vector3(3, 3, 3)
+
 [node name="Player" type="CharacterBody3D" unique_id=1732928329 groups=["player"]]
 collision_layer = 3
 script = ExtResource("1_44dyf")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=479901416]
+transform = Transform3D(1, 0, 0, 0, 0.42456302, 0.9053984, 0, -0.9053984, 0.42456302, 0.6458104, 7.0617285, 2.5039382)
+current = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1036394565]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8120117, 0)
@@ -71,9 +82,6 @@ player = NodePath("../..")
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="ResourceManager" type="Node" parent="." unique_id=1665941596]
-script = ExtResource("7_01vnt")
-
 [node name="Visuals" type="Node3D" parent="." unique_id=190528697]
 
 [node name="dwarf" parent="Visuals" unique_id=69745088 instance=ExtResource("1_vn1c7")]
@@ -113,9 +121,41 @@ text = "0 GOLD
 "
 label_settings = SubResource("LabelSettings_xv85a")
 horizontal_alignment = 2
+script = ExtResource("9_m3tqg")
+
+[node name="CenterContainer" type="CenterContainer" parent="PlayerUI/MarginContainer/VBoxContainer" unique_id=1608847625]
+layout_mode = 2
 
 [node name="PauseMenu" parent="PlayerUI" unique_id=843731352 instance=ExtResource("9_touca")]
 visible = false
 layout_mode = 1
+
+[node name="RadialMenu" parent="PlayerUI" unique_id=260848950 instance=ExtResource("9_ow3yf")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 640.0
+offset_top = 97.0
+offset_right = 640.0
+offset_bottom = 97.0
+
+[node name="BuildManager" type="Node3D" parent="." unique_id=1635773627 node_paths=PackedStringArray("camera")]
+script = ExtResource("11_ow3yf")
+camera = NodePath("../Camera3D")
+cannon_turret = ExtResource("12_j1pys")
+turret_preview_scene = ExtResource("13_nyhdo")
+turret_cost = 1
+
+[node name="BuildRaycast" type="RayCast3D" parent="BuildManager" unique_id=1589583072]
+collision_mask = 17
+
+[node name="BuildAreaCheck" type="Area3D" parent="BuildManager" unique_id=1859535722]
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BuildManager/BuildAreaCheck" unique_id=303240385]
+shape = SubResource("BoxShape3D_mnwos")
 
 [connection signal="body_entered" from="Visuals/AttackArea" to="StateMachine/Attack" method="_on_attack_area_body_entered"]

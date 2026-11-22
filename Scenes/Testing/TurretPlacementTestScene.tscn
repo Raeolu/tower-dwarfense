@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bvhtagmsp0sa8"]
+
+[ext_resource type="PackedScene" uid="uid://ld7hq1shsrgm" path="res://Assets/Turret Models/basic_turret.glb" id="1_exjwl"]
+
+[node name="TurretPlacementTestScene" type="Node3D" unique_id=1680206755]
+
+[node name="basic_turret" parent="." unique_id=1986213583 instance=ExtResource("1_exjwl")]
+
+[editable path="basic_turret"]
