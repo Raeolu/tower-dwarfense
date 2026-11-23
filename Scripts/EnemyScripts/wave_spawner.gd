@@ -35,6 +35,7 @@ var _active_enemies: int = 0
 var _wave_total_enemies: int = 0
 var _wave_spawned_enemies: int = 0
 var _last_spawn_point_name: String = "-"
+var _paused: bool = false
 
 
 func _ready() -> void:
@@ -45,6 +46,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if _paused:
+		return
+
 	match _state:
 		_State.SPAWNING:
 			_spawn_timer -= delta
@@ -62,14 +66,28 @@ func _process(delta: float) -> void:
 
 
 func start_spawning() -> void:
+	_paused = false
 	_active_enemies = 0
 	_spawn_queue.clear()
 	start_wave(0)
 
 
 func stop_spawning() -> void:
+	_paused = false
 	_state = _State.IDLE
 	_spawn_queue.clear()
+
+
+func pause() -> void:
+	_paused = true
+
+
+func resume() -> void:
+	_paused = false
+
+
+func is_paused() -> bool:
+	return _paused
 
 
 func start_wave(wave_index: int) -> void:
@@ -150,6 +168,9 @@ func _advance_or_finish() -> void:
 
 
 func get_state_name() -> String:
+	if _paused and _state != _State.FINISHED:
+		return "Paused"
+
 	match _state:
 		_State.IDLE:
 			return "Idle"
