@@ -1,5 +1,8 @@
 extends PlayerState
 
+func enter():
+	if player.anim_player != null:
+		player.anim_player.play("FALLING", 0.4)
 
 func physics_update(delta: float) -> void:
 	# Faster falling

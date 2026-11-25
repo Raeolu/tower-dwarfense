@@ -25,6 +25,7 @@ var can_dash: bool = true
 ## See miro for Celeste example
 var coyote_timer: float = 0.0
 
+@onready var anim_player = $Visuals/dwarf/AnimationPlayer
 
 func _physics_process(delta: float) -> void:
 	# Update coyote timer based on floor state.

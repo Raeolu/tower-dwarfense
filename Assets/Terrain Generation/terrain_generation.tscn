@@ -32,7 +32,7 @@ point_count = 8
 environment = SubResource("Environment_g517b")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2001260977]
-transform = Transform3D(-0.29679, 0.32132673, 0.899258, 0.81358206, 0.5781429, 0.061929196, -0.5000002, 0.7500002, -0.43301272, 0, 0, 0)
+transform = Transform3D(-0.8227946, -0.2553964, 0.5077221, 0.2702017, 0.6101415, 0.7447942, -0.50000006, 0.75000006, -0.43301257, 0, 17.548653, 0)
 light_angular_distance = 0.5
 shadow_enabled = true
 

@@ -1,5 +1,8 @@
 extends PlayerState
 
+func enter():
+	if player.anim_player != null:
+		player.anim_player.play("IDLE", 0.3)
 
 func physics_update(delta: float):
 	if not player.is_on_floor():

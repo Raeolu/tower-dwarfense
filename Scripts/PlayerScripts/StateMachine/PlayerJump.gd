@@ -7,6 +7,9 @@ func enter() -> void:
 	jump_cut_applied = false
 	player.coyote_timer = 0.0
 	player.velocity.y = player.jump_velocity
+	
+	if player.anim_player != null:
+		player.anim_player.play("JUMP", 0.2)
 
 
 func physics_update(delta: float) -> void:

@@ -1,7 +1,8 @@
 extends PlayerState
 
 func enter():
-	pass
+	if player.anim_player != null:
+		player.anim_player.play("WALK", 0.2)
 
 func exit():
 	pass
@@ -25,4 +26,3 @@ func physics_update(delta: float):
 	player.apply_horizontal_movement(delta)
 	#rotates the player to the direction. Check the player script for more info.
 	player.rotate_to_direction(player.direction)
-
