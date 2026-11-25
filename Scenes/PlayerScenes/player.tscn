@@ -89,7 +89,7 @@ offset_bottom = 23.0
 
 [node name="dwarf" parent="Visuals" unique_id=266381344 instance=ExtResource("1_vn1c7")]
 
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Visuals/dwarf/Armature/Skeleton3D" parent_id_path=PackedInt32Array(266381344, 1991898712) index="11" unique_id=804986589]
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Visuals/dwarf/Armature/Skeleton3D" parent_id_path=PackedInt32Array(266381344, 1417118993) index="11" unique_id=804986589]
 transform = Transform3D(0, 0.99999994, 0, -1, 0, -4.37114e-08, -4.37114e-08, 0, 1, 0.78377163, 1.0201006, 0.043911338)
 bone_name = "Hand.R"
 bone_idx = 3
