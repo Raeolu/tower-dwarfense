@@ -99,13 +99,21 @@ func set_preview_material_color(color: Color):
 		mat.albedo_color.a = 0.5
 
 func get_mouse_ground_position() -> Vector3:
-	#THIS RETURNS THE A POSITION WHERE THE MOUSE TOUCHES THE GROUND
+	# With a captured mouse we aim from the middle of the screen.
 	var mouse_pos = get_viewport().get_mouse_position()
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		mouse_pos = get_viewport().get_visible_rect().size / 2
+
 	var ray_origin = camera.project_ray_origin(mouse_pos)
 	var ray_direction = camera.project_ray_normal(mouse_pos)
-	
+
 	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_origin + ray_direction * 1000.0)
+	query.exclude = [get_parent().get_rid()]   # don't hit our own player
 	var result = get_world_3d().direct_space_state.intersect_ray(query)
+
+	if result:
+		return result.position
+	return Vector3.ZERO
 	
 	if result:
 		return result.position

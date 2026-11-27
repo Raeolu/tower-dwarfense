@@ -48,11 +48,20 @@ extends Node3D
 @export var color_spawn := Color(0.5, 0.47, 0.42)
 @export var color_rock_wall := Color(0.5, 0.5, 0.52)
 
+@export_group("Ores")
+@export var ore_scene: PackedScene
+@export_range(0.0, 100.0, 0.1, "suffix:%") var ore_chance := 2.0   ## chance per cell
+var _ore_container: Node3D
+
 
 # ============================================================ data
 
 var heights := {}       # Vector2i(x, z) -> -1, 0 or 1
 var path_cells := {}    # Vector2i(x, z) -> true, for cells drawn as dirt
+var near_path_cells := {}   # Vector2i(x, z) -> true, for the flat ground around a path (includes the dirt)
+var spawn_cells := {}       # Vector2i(x, z) -> true, for the flat spawn area in the middle
+var path_distances := {}    # Vector2i(x, z) -> metres to the closest path (only cells close to a path)
+var map_noise: FastNoiseLite   # the noise used for this map (already has the map seed)
 
 var _seed := 0
 var _mesh_instance: MeshInstance3D
@@ -78,6 +87,7 @@ func rebuild() -> void:
 	set_process(true)
 	watch_paths()
 	pick_heights()
+	place_ores()
 	build_mesh()
 
 
@@ -86,12 +96,14 @@ func rebuild() -> void:
 func pick_heights() -> void:
 	heights.clear()
 	path_cells.clear()
+	near_path_cells.clear()
+	spawn_cells.clear()
 
 	# A copy of the noise, so changing the seed does not change the noise saved in the scene.
-	var map_noise: FastNoiseLite = noise.duplicate() if noise else FastNoiseLite.new()
+	map_noise = noise.duplicate() if noise else FastNoiseLite.new()
 	map_noise.seed = _seed
 
-	var path_distances := measure_path_distances()
+	path_distances = measure_path_distances()
 
 	for x in cells_per_side:
 		for z in cells_per_side:
@@ -104,6 +116,10 @@ func pick_heights() -> void:
 
 			var in_spawn := center.length() < spawn_radius
 			var near_path := distance_to_path < path_flat_width / 2.0
+			if in_spawn:
+				spawn_cells[cell] = true
+			if near_path:
+				near_path_cells[cell] = true
 			if in_spawn or near_path:
 				heights[cell] = 0
 				continue
@@ -170,6 +186,8 @@ func build_mesh() -> void:
 	_mesh_instance.add_to_group("NavSource")
 	add_child(_mesh_instance)
 	_mesh_instance.create_trimesh_collision()   # makes the same triangles solid
+	var body := _mesh_instance.get_child(0) as StaticBody3D
+	body.set_collision_layer_value(5, true)
 
 
 ## Adds a square (two triangles) to the mesh. `facing` is the direction the square looks at.
@@ -186,10 +204,10 @@ func add_square(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, d: Vector3,
 
 
 func cell_color(cell: Vector2i) -> Color:
-	if path_cells.has(cell):
-		return color_path
 	if cell_center(cell).length() < spawn_radius:
 		return color_spawn
+	if path_cells.has(cell):
+		return color_path
 	match heights[cell]:
 		1: return color_platform
 		-1: return color_hole
@@ -207,9 +225,11 @@ func get_flat_paths() -> Array[Curve3D]:
 			continue
 		var flat := Curve3D.new()
 		for i in child.curve.point_count:
-			var point: Vector3 = child.position + child.curve.get_point_position(i)
-			var handle_in: Vector3 = child.curve.get_point_in(i)
-			var handle_out: Vector3 = child.curve.get_point_out(i)
+			# Use the whole transform, so moved AND rotated paths end up in the right place.
+			# Handles are directions, so they only get rotated (basis), not moved.
+			var point: Vector3 = child.transform * child.curve.get_point_position(i)
+			var handle_in: Vector3 = child.transform.basis * child.curve.get_point_in(i)
+			var handle_out: Vector3 = child.transform.basis * child.curve.get_point_out(i)
 			point.y = 0
 			handle_in.y = 0
 			handle_out.y = 0
@@ -312,3 +332,31 @@ func height_at(pos: Vector3) -> float:
 ## True when a position is on the dirt of a path (for example to forbid building there).
 func is_on_path(pos: Vector3) -> bool:
 	return path_cells.has(cell_at(pos))
+	
+func place_ores():
+	
+	if is_instance_valid(_ore_container):
+		_ore_container.queue_free()
+	_ore_container = Node3D.new()
+	_ore_container.name = "Ores"
+	add_child(_ore_container)
+
+	var rng := RandomNumberGenerator.new()
+	rng.seed = _seed
+	
+	for x in cells_per_side:
+		for z in cells_per_side:
+			var cell := Vector2i(x, z)
+			
+			if cell in spawn_cells or cell in near_path_cells:
+				continue
+
+			# Only on normal ground (level 0), not on platforms (1) or in holes (-1).
+			if heights[cell] != 0:
+				continue
+
+			if rng.randf() < ore_chance / 100.0:
+				var ore := ore_scene.instantiate()
+				ore.position = cell_center(cell)
+				ore.position.y = height_in_metres(heights[cell]) + 0.3
+				_ore_container.add_child(ore)

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://detdwr5r37u4j" path="res://Scripts/PlayerScripts/player.gd" id="1_44dyf"]
 [ext_resource type="PackedScene" uid="uid://ckelkvbvju3el" path="res://Assets/Character Models/dwarf.glb" id="1_vn1c7"]
+[ext_resource type="Script" uid="uid://d16m3w3c5n6k2" path="res://Scripts/PlayerScripts/thirdpersoncamera.gd" id="2_seqbi"]
 [ext_resource type="Script" uid="uid://bjemqqanxpt37" path="res://Scripts/PlayerScripts/StateMachine/state_machine.gd" id="3_2oab2"]
 [ext_resource type="Script" uid="uid://blryeifmxbcmk" path="res://Scripts/PlayerScripts/StateMachine/PlayerIdle.gd" id="4_pu5dk"]
 [ext_resource type="Script" uid="uid://bai42gyqc0reo" path="res://Scripts/PlayerScripts/StateMachine/PlayerDash.gd" id="5_c45ss"]
@@ -18,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://bvhtagmsp0sa8" path="res://Scenes/Testing/TurretPlacementTestScene.tscn" id="13_nyhdo"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_brhye"]
+radius = 0.40576172
 height = 1.6240234
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bric5"]
@@ -40,8 +42,15 @@ size = Vector3(3, 3, 3)
 collision_layer = 3
 script = ExtResource("1_44dyf")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=479901416]
-transform = Transform3D(1, 0, 0, 0, 0.42456302, 0.9053984, 0, -0.9053984, 0.42456302, 0.6458104, 7.0617285, 2.5039382)
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1480415320]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("2_seqbi")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=346631713]
+transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 0, 0, 0)
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=479901416]
 current = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1036394565]
@@ -89,7 +98,7 @@ offset_bottom = 23.0
 
 [node name="dwarf" parent="Visuals" unique_id=266381344 instance=ExtResource("1_vn1c7")]
 
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Visuals/dwarf/Armature/Skeleton3D" parent_id_path=PackedInt32Array(266381344, 1417118993) index="11" unique_id=804986589]
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Visuals/dwarf/Armature/Skeleton3D" parent_id_path=PackedInt32Array(266381344, 824720880) index="11" unique_id=804986589]
 transform = Transform3D(0, 0.99999994, 0, -1, 0, -4.37114e-08, -4.37114e-08, 0, 1, 0.78377163, 1.0201006, 0.043911338)
 bone_name = "Hand.R"
 bone_idx = 3
@@ -159,7 +168,7 @@ grow_vertical = 1
 
 [node name="BuildManager" type="Node3D" parent="." unique_id=1635773627 node_paths=PackedStringArray("camera")]
 script = ExtResource("11_ow3yf")
-camera = NodePath("../Camera3D")
+camera = NodePath("../CameraPivot/SpringArm3D/Camera3D")
 cannon_turret = ExtResource("12_j1pys")
 turret_preview_scene = ExtResource("13_nyhdo")
 turret_cost = 1

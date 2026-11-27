@@ -13,6 +13,7 @@ material = SubResource("StandardMaterial3D_mnwos")
 size = Vector3(2, 2, 2)
 
 [node name="Ore" type="StaticBody3D" unique_id=359706659 groups=["resource"]]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 script = ExtResource("1_p2yev")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1048024563]

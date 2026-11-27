@@ -38,6 +38,8 @@ func _process(delta: float) -> void:
 
 func _show_menu() -> void:
 	#centerPosition = get_viewport_rect().size / 2.0
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	get_viewport().warp_mouse(centerPosition)
 	active = true
 	selected_button = null
 	button_container.show()
@@ -64,6 +66,7 @@ func _hide_menu() -> void:
 		return
 
 	active = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	if menuTween and menuTween.is_running():
 		menuTween.kill()

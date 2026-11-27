@@ -26,6 +26,7 @@ var can_dash: bool = true
 var coyote_timer: float = 0.0
 
 @onready var anim_player = $Visuals/dwarf/AnimationPlayer
+@onready var camera_pivot: Node3D = $CameraPivot
 
 func _physics_process(delta: float) -> void:
 	# Update coyote timer based on floor state.
@@ -36,7 +37,7 @@ func _physics_process(delta: float) -> void:
 
 	# Get the input direction.
 	var input_dir := Input.get_vector("left", "right", "up", "down")
-	direction = (transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
+	direction = (camera_pivot.global_basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
 	move_and_slide()
 
 
